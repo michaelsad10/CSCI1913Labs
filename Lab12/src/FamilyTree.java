@@ -9,14 +9,20 @@ public class FamilyTree
         private Node(String name, Node father, Node mother)
         {
             this.name = name;
-            this.father = father;
-            this.mother = mother;
+            this.father = null;
+            this.mother = null;
         }
     }
 
+    private Node root;
+    private Node head;
+
     public FamilyTree(String ego)
     {
-
+        root.name = ego;
+        root.father = null;
+        root.mother = null;
+        head = root;
     }
     private Node find(String name)
     {
@@ -25,7 +31,21 @@ public class FamilyTree
 
     private Node find(String name, Node root)
     {
-
+        Node temp = root;
+        if(root!=null)
+        {
+            if(temp.name==name)
+            {
+                return temp;
+            }
+            else
+            {
+                temp = root.father;
+                find(name,temp.father);
+                find(name,temp.mother);
+            }
+        }
+        return null;
     }
 
     public void addParents(String ego, String father, String mother)
