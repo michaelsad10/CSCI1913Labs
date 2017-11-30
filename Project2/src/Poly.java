@@ -9,7 +9,11 @@ public class Poly
 
     public Poly term(int coef, int expo)
     {
-        if(expo<0)
+        if(coef==0)
+        {
+            return this;
+        }
+        if (expo<0)
         {
             throw new IllegalArgumentException();
         }
@@ -97,6 +101,7 @@ public class Poly
                         right = right.next;
                     }
             }
+            left.next = new Term(coef,expo,right);
         }
     }
 
@@ -170,7 +175,9 @@ class PollyEsther
         Poly p7 = p5.minus();
         Poly p8 = new Poly().term(4,3).term(2,2).term(7,1);
         Poly p9 = new Poly().term(6,3).term(5,2).term(3,1);
-
+        Poly p10 = new Poly().term(3,4).term(2,3).term(3,2);
+        Poly p11 = new Poly().term(2,3).term(1,4);
+        Poly p12 = new Poly().term(0,0);
 
         System.out.println(p0);           //  0
         System.out.println(p1);           //  1x3 + 1x2 + 1x1
@@ -181,11 +188,21 @@ class PollyEsther
         System.out.println(p7);           // -2x4 - 2x2 - 2x1   ADDED
         System.out.println(p8);           // 4x3 + 2x2 + 7x1    ADDED
         System.out.println(p9);           // 6x3 + 5x2 + 3x1    ADDED
+        System.out.println(p10);          // 3x4 + 2x3 + 3x2    ADDED
+        System.out.println(p11);          // 1x4 + 2x3          ADDED
+        System.out.println(p12);          // 0                  ADDED
+
 
 
         System.out.println(p1.plus(p2));  //  1x3 + 4x2 + 3x1
         System.out.println(p1.plus(p3));  //  1x3 − 2x2 − 1x1
         System.out.println(p4.plus(p5));  //  3x4 + 5x2 + 5x1  ADDED
-        System.out.println(p8.plus(p9)); //   10x3 + 7x2 + 10x1 ADDED 
+        System.out.println(p8.plus(p9)); //   10x3 + 7x2 + 10x1 ADDED
+        System.out.println(p10.plus(p11)); // 4x4 + 4x3 + 3x2 ADDED
+        System.out.println(p11.plus(p12)); // 1x4 + 2x3 ADDED
+
+
+
+
     }
 }
