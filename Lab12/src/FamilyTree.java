@@ -6,7 +6,7 @@ public class FamilyTree
         private Node father;
         private Node mother;
 
-        private Node(String name, Node father, Node mother)
+        public Node(String name, Node father, Node mother)
         {
             this.name = name;
             this.father = null;
@@ -15,45 +15,57 @@ public class FamilyTree
     }
 
     private Node root;
-    private Node head;
 
     public FamilyTree(String ego)
     {
-        root.name = ego;
-        root.father = null;
-        root.mother = null;
-        head = root;
+       root = new Node(ego,null,null);
     }
+
     private Node find(String name)
     {
-
+        return(find(name,root));
     }
 
     private Node find(String name, Node root)
     {
-        Node temp = root;
+
         if(root!=null)
         {
-            if(temp.name==name)
+            if(root.name.equals(name))
             {
-                return temp;
+                return root;
             }
             else
             {
-                temp = root.father;
-                find(name,temp.father);
-                find(name,temp.mother);
+                Node foundNode = find(name,root.father);
+                if(foundNode == null)
+                {
+                    foundNode = find(name,root.mother);
+                }
+                return foundNode;
             }
+
         }
-        return null;
+        else
+        {
+            return null;
+        }
     }
 
-    public void addParents(String ego, String father, String mother)
-    {
+   public void addParents(String ego, String father, String mother)
+   {
+       if(find(ego).father == null && find(ego).mother == null)
+       {
+           find(ego).father = new Node(father, null,null);
+           find(ego).mother = new Node(mother,null,null);
+       }
+       else
+       {
+           throw new IllegalArgumentException();
+       }
+   }
 
-    }
-
-    public boolean isDescendant(String ego, String ancestor)
+    /*public boolean isDescendant(String ego, String ancestor)
     {
 
     }
@@ -61,5 +73,56 @@ public class FamilyTree
     private boolean isDescendant(Node root, Node ancestor)
     {
 
+    }*/
+}
+
+
+//  POTTERY. Driver class, for testing. Each comment shows a point value (for a
+//  total of 40 points) and what it should print.
+
+class Pottery
+{
+
+//  MAIN. Harry Potter and the Hairier Pottery.
+
+    public static void main(String [] args)
+    {
+        FamilyTree family = new FamilyTree("Al");
+
+        family.addParents("Al",    "Harry",  "Ginny");
+        family.addParents("Harry", "James",  "Lily" );
+        family.addParents("Ginny", "Arthur", "Molly");
+
+        try
+        {
+            family.addParents("Joanne", "Peter", "Anne");
+        }
+        catch (IllegalArgumentException ignore)
+        {
+            System.out.println("No Joanne.");  //  2 No Joanne.
+        }
+
+       /* System.out.println(family.isDescendant("Joanne", "Joanne"));  //  2 false
+
+        System.out.println(family.isDescendant("Al", "Al"));          //  2 true
+        System.out.println(family.isDescendant("Al", "Harry"));       //  2 true
+        System.out.println(family.isDescendant("Al", "Ginny"));       //  2 true
+        System.out.println(family.isDescendant("Al", "James"));       //  2 true
+        System.out.println(family.isDescendant("Al", "Lily"));        //  2 true
+        System.out.println(family.isDescendant("Al", "Arthur"));      //  2 true
+        System.out.println(family.isDescendant("Al", "Molly"));       //  2 true
+        System.out.println(family.isDescendant("Al", "Joanne"));      //  2 false
+
+        System.out.println(family.isDescendant("Harry", "Harry"));    //  2 true
+        System.out.println(family.isDescendant("Harry", "Al"));       //  2 false
+        System.out.println(family.isDescendant("Harry", "James"));    //  2 true
+        System.out.println(family.isDescendant("Harry", "Lily"));     //  2 true
+        System.out.println(family.isDescendant("Harry", "Ginny"));    //  2 false
+        System.out.println(family.isDescendant("Harry", "Arthur"));   //  2 false
+        System.out.println(family.isDescendant("Harry", "Molly"));    //  2 false
+        System.out.println(family.isDescendant("Harry", "Joanne"));   //  2 false
+
+        System.out.println(family.isDescendant("Ginny", "Arthur"));   //  2 true
+        System.out.println(family.isDescendant("Arthur", "Ginny"));   //  2 false*/
     }
 }
