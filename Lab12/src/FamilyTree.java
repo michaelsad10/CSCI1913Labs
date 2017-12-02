@@ -21,6 +21,18 @@ public class FamilyTree
        root = new Node(ego,null,null);
     }
 
+    public boolean isEqual(Node a, Node b)
+    {
+        if(a == null || b == null)
+        {
+            return (a == b);
+        }
+        else
+        {
+            return(a.equals(b));
+        }
+    }
+
     private Node find(String name)
     {
         return(find(name,root));
@@ -35,34 +47,24 @@ public class FamilyTree
             {
                 return root;
             }
-            else
-            {
-                Node foundNode = find(name,root.father);
-                if(foundNode == null)
-                {
-                    foundNode = find(name,root.mother);
-                }
-                return foundNode;
-            }
-
+            find(name,root.father);
+            find(name,root.mother);
         }
-        else
-        {
-            return null;
-        }
+        return null;
     }
 
    public void addParents(String ego, String father, String mother)
    {
-       if(find(ego).father == null && find(ego).mother == null)
-       {
-           find(ego).father = new Node(father, null,null);
-           find(ego).mother = new Node(mother,null,null);
-       }
-       else
-       {
-           throw new IllegalArgumentException();
-       }
+      Node temp = find(ego);
+      if(isEqual(temp,null))
+      {
+          throw new IllegalArgumentException();
+      }
+      else
+      {
+          temp.father = new Node(father,null,null);
+          temp.mother = new Node(mother,null,null);
+      }
    }
 
     /*public boolean isDescendant(String ego, String ancestor)
