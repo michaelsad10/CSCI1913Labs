@@ -40,42 +40,63 @@ public class FamilyTree
 
     private Node find(String name, Node root)
     {
-
         if(root!=null)
         {
-            if(root.name.equals(name))
+            if (name.equals(root.name))
             {
                 return root;
             }
-            find(name,root.father);
-            find(name,root.mother);
+            else
+            {
+               Node tempF = find(name, root.father);
+               Node tempM = find(name, root.mother);
+               if(tempF!=null)
+               {
+                   return tempF;
+               }
+               if(tempM!=null)
+               {
+                    return tempM;
+               }
+            }
         }
         return null;
     }
-
-   public void addParents(String ego, String father, String mother)
-   {
-      Node temp = find(ego);
-      if(isEqual(temp,null))
-      {
-          throw new IllegalArgumentException();
-      }
-      else
-      {
-          temp.father = new Node(father,null,null);
-          temp.mother = new Node(mother,null,null);
-      }
-   }
-
-    /*public boolean isDescendant(String ego, String ancestor)
+    public boolean isDescendant(String ego, String ancestor)
     {
-
+        return isDescendant(find(ego),find(ancestor));
     }
 
     private boolean isDescendant(Node root, Node ancestor)
     {
+        if (root != null) {
+            if (root == ancestor) {
+                return true;
+            }
+            boolean fTemp = isDescendant(root.father, ancestor);
+            boolean mTemp = isDescendant(root.mother, ancestor);
 
-    }*/
+            return fTemp || mTemp;
+        }
+        return false;
+    }
+
+    public void addParents(String ego, String father, String mother)
+    {
+        Node temp = find(ego);
+        if(isEqual(temp,null))
+        {
+            throw new IllegalArgumentException();
+        }
+        else
+        {
+            temp.father = new Node(father,null,null);
+            temp.mother = new Node(mother,null,null);
+        }
+    }
+
+
+
 }
 
 
@@ -104,7 +125,7 @@ class Pottery
             System.out.println("No Joanne.");  //  2 No Joanne.
         }
 
-       /* System.out.println(family.isDescendant("Joanne", "Joanne"));  //  2 false
+        System.out.println(family.isDescendant("Joanne", "Joanne"));  //  2 false
 
         System.out.println(family.isDescendant("Al", "Al"));          //  2 true
         System.out.println(family.isDescendant("Al", "Harry"));       //  2 true
@@ -125,6 +146,6 @@ class Pottery
         System.out.println(family.isDescendant("Harry", "Joanne"));   //  2 false
 
         System.out.println(family.isDescendant("Ginny", "Arthur"));   //  2 true
-        System.out.println(family.isDescendant("Arthur", "Ginny"));   //  2 false*/
+        System.out.println(family.isDescendant("Arthur", "Ginny"));   //  2 false
     }
 }
