@@ -1,4 +1,4 @@
-public class FamilyTree
+ class FamilyTree
 {
     private class Node
     {
