@@ -7,68 +7,60 @@ class CrossRef
     private class Node
     {
         private String name;
-        private Node value;
+        private List values;
         private Node left;
         private Node right;
 
 
-        Node(String name, Node value, Node left, Node right)
+        Node(String name, List values, Node left, Node right)
         {
+            Node head = new Node("Head",values,null,null);
             this.name = name;
             this.left = left;
             this.right = right;
+        }
+
+    }
+    private class List
+    {
+        private Node left;
+        private Node right;
+        private int value;
+
+        List(Node left, int value, Node right)
+        {
+            this.left = left;
             this.value = value;
+            this.right = right;
         }
 
     }
 
-    private Node root;
+    Node root;
 
-    public CrossRef()
+    CrossRef()
     {
-        root = null;
+        root = new Node(null,null,null,null);
     }
 
-    public void add(int key, String name)
+
+    public void addBST(String name, int line)
     {
-        if(root==null)
+        Node temp = root;
+
+        if(root.name == null)
         {
-            root = new Node(key,name);
+            root.name = name;
+            root.values.value = line;
         }
         else
         {
-            Node temp = root;
-            while(true)
+            if(0 < root.name.compareTo(name))
             {
-                if (key < temp.key)
-                {
-                    if (temp.left == null)
-                    {
-                        temp.left = new Node(key, name);
-                        return;
-                    }
-                    else
-                    {
-                        temp = temp.left;
-                    }
-                }
-                else if(key>temp.key)
-                {
-                    if(temp.right == null)
-                    {
-                        temp.right = new Node(key,name);
-                        return;
-                    }
-                    else
-                    {
-                        temp = temp.right;
-                    }
-                }
-
+                temp = root.left;
+                temp = new Node(name,)
             }
-
         }
-
     }
 }
 
