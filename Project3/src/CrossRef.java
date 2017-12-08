@@ -4,7 +4,7 @@ import java.io.IOException;
 
 class CrossRef
 {
-    private class Node
+    public class Node
     {
         private String name;
         private List values;
@@ -58,7 +58,14 @@ class CrossRef
             if(0 < root.name.compareTo(name))
             {
                 temp = root.left;
-                temp = new Node(name,)
+                List linked = new List(temp,line,null);
+                temp = new Node(name, linked,null,null);
+            }
+            else
+            {
+                temp = root.right;
+                List linked = new List(temp,line,null);
+                temp = new Node(name,linked,null,null);
             }
         }
     }
