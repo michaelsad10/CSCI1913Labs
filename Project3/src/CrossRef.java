@@ -23,15 +23,14 @@ class CrossRef
     }
     private class List
     {
-        private Node left;
-        private Node right;
+
+        private List next;
         private int value;
 
-        List(Node left, int value, Node right)
+        List(int value, List next)
         {
-            this.left = left;
             this.value = value;
-            this.right = right;
+            this.next = next;
         }
 
     }
@@ -47,20 +46,37 @@ class CrossRef
     public void addBST(String name, int line)
     {
         Node temp = root;
+        List tracker;
 
         if(root.name == null)
         {
+            List linked = new List(line,null);
+            root.values = linked;
             root.name = name;
-            root.values.value = line;
         }
         else
         {
-            if(0 < root.name.compareTo(name))
+            if(root.name.equals(name))
+            {
+                tracker = root.values;
+                while(tracker != null)
+                {
+                    if(tracker.next == null)
+                    {
+                        tracker.next = new List(line,null);
+                    }
+                    else
+                    {
+                        tracker = tracker.next;
+                    }
+                }
+            }
+            else if(0 < root.name.compareTo(name))
             {
                 temp = root.left;
-                List linked = new List(temp,line,null);
+                List linked = new List(line, null);
                 temp = new Node(name, linked,null,null);
-            }
+
             else
             {
                 temp = root.right;
