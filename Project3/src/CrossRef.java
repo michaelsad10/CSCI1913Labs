@@ -48,7 +48,7 @@ class CrossRef
         Node temp = root;
         List tracker;
 
-        if(root.name == null)
+        if(root.name == null) // If the root is empty
         {
             List linked = new List(line,null);
             root.values = linked;
@@ -56,28 +56,47 @@ class CrossRef
         }
         else
         {
-            if(root.name.equals(name))
+            if(root.name.equals(name)) // If root name is equal to name passing through
             {
                 tracker = root.values;
                 while(tracker != null)
                 {
-                    if(tracker.next == null)
+                    if(tracker.next == null) // Gets to the last linked list
                     {
                         tracker.next = new List(line,null);
+                        return;
                     }
-                    else
+                    else // Helps traverse the linked list
                     {
                         tracker = tracker.next;
                     }
                 }
             }
-            else if(0 < root.name.compareTo(name))
+            else if(0 < root.name.compareTo(name)) // If the name in the root is greater than the name passing
             {
                 temp = root.left;
-                List linked = new List(line, null);
-                temp = new Node(name, linked,null,null);
+                if(temp.name.equals(name))
+                {
+                    while (tracker != null)
+                    {
+                        if (tracker.next == null)
+                        {
+                            tracker.next = new List(line, null);
+                            return;
+                        }
+                        else
+                        {
+                            tracker = tracker.next;
+                        }
+                    }
+                }
+                else // If the name does not equal the name passing then make a new node
+                {
+                    List linked = new List(line, null);
+                    temp = new Node(name, linked, null, null);
+                }
 
-            else
+            else // If the name in the root is less than the name passing.
             {
                 temp = root.right;
                 List linked = new List(temp,line,null);
