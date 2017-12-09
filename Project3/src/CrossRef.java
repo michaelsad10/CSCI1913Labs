@@ -4,7 +4,7 @@ import java.io.IOException;
 
 class CrossRef
 {
-    public class Node
+    private class Node
     {
         private String name;
         private List values;
@@ -12,12 +12,12 @@ class CrossRef
         private Node right;
 
 
-        Node(String name, List values, Node left, Node right)
+        Node(String name, List values)
         {
-            Node head = new Node("Head",values,null,null);
-            this.name = name;
-            this.left = left;
-            this.right = right;
+           this.name = name;
+           this.values = values;
+           this.left = null;
+           this.right = null;
         }
 
     }
@@ -39,72 +39,56 @@ class CrossRef
 
     CrossRef()
     {
-        root = new Node(null,null,null,null);
+        root = null;
     }
 
 
     public void addBST(String name, int line)
     {
-        Node temp = root;
-        List tracker;
-
-        if(root.name == null) // If the root is empty
-        {
-            List linked = new List(line,null);
-            root.values = linked;
-            root.name = name;
-        }
-        else
-        {
-            if(root.name.equals(name)) // If root name is equal to name passing through
+            if (root.name == null) // If the root is empty
             {
-                tracker = root.values;
-                while(tracker != null)
-                {
-                    if(tracker.next == null) // Gets to the last linked list
-                    {
-                        tracker.next = new List(line,null);
-                        return;
-                    }
-                    else // Helps traverse the linked list
-                    {
-                        tracker = tracker.next;
-                    }
-                }
+                List linked = new List(line, null);
+                root = new Node(name,linked);
             }
-            else if(0 < root.name.compareTo(name)) // If the name in the root is greater than the name passing
+            else
             {
-                temp = root.left;
-                if(temp.name.equals(name))
+                Node temp = root;
+                while (true)
                 {
-                    while (tracker != null)
+                    if (temp.name.compareTo(name) < 0) // Go right
                     {
-                        if (tracker.next == null)
+                        if (temp.right == null)
                         {
-                            tracker.next = new List(line, null);
+                            List linked = new List(line, null);
+                            temp.right = new Node(name, linked);
+
+                            return;
+                        }
+                        else
+                            {
+                                temp = temp.right;
+                            }
+                    }
+                    else if (temp.name.compareTo(name) > 0) // go left
+                    {
+                        if (temp.left == null)
+                        {
+                            List linked = new List(line, null);
+                            temp.left = new Node(name, linked);
                             return;
                         }
                         else
                         {
-                            tracker = tracker.next;
+                            temp = temp.left;
                         }
                     }
-                }
-                else // If the name does not equal the name passing then make a new node
-                {
-                    List linked = new List(line, null);
-                    temp = new Node(name, linked, null, null);
-                }
+                    else if (temp.name.compareTo(name) == 0)
+                    {
 
-            else // If the name in the root is less than the name passing.
-            {
-                temp = root.right;
-                List linked = new List(temp,line,null);
-                temp = new Node(name,linked,null,null);
+                    }
+                }
             }
-        }
     }
-}
 
 
 //
