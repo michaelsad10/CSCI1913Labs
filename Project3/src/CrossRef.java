@@ -93,58 +93,8 @@ class CrossRef
         }
     }
 
-    public String toString()
-    {
-        StringBuilder stringBuilder = new StringBuilder();
-        makeString(stringBuilder,root);
-        return stringBuilder.toString();
-    }
-    private void makeString(StringBuilder stringBuilder, Node root)
-    {
-        if(root!=null)
-        {
-            makeString(stringBuilder, root.left);
-            stringBuilder.append(root.toString()).append("\n");
-            makeString(stringBuilder, root.right);
-        }
-    }
-    public String toString()
-    {
-        StringBuilder temp = new StringBuilder();
-        StringBuilder stringBuilder = new StringBuilder();
-        while(values != null)
-        {
-            temp.append(String.format("%05d", lines.line)).append(" ");
-
-        }
-    }
 
 }
-
-class Test
-{
-    public static void main(String[] args)
-    {
-        String path;
-        if(args.length>1)
-        {
-            throw new IllegalArgumentException();
-        }
-        else
-        {
-            path = args[0];
-            Nomenclator reader = new Nomenclator(path,true);
-            CrossRef test = new CrossRef();
-            while(reader.hasNext())
-            {
-                test.addBST(reader.nextName(),reader.nextNumber());
-            }
-
-            System.out.println(test.toString());
-        }
-    }
-}
-
 
     /**
      * Correct version of Nomenclator
